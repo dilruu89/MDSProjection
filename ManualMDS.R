@@ -32,7 +32,7 @@ MDS <-function(Dissimilarity_matrix, dim){
   }
   points <- evec * rep(sqrt(ev), each = n)
   
-  results <- list("InnerProduct" = B, "Points" = points)
+  results <- list("InnerProduct" = B, "Points" = points, "EigenValues" = e)
   
   return(results)
   
