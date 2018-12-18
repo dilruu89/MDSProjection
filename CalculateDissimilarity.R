@@ -4,7 +4,7 @@ Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
 
 distance.method <- "jw"
 
-randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 100),]
+randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 1000),]
 randomnames <- as.data.frame(randomnames)
 randomnames
 
@@ -22,4 +22,7 @@ ev<-results$EigenValues$values
 
 sum(Plusev)
 sum(Negev)
+
+stressV <- calculateStress(2,20,dist.name.enh)
+SummaryStress(stressV)
 
