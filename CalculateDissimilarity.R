@@ -4,9 +4,12 @@ Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
 
 distance.method <- "jw"
 
-randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 1000),]
+randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
 randomnames <- as.data.frame(randomnames)
 randomnames
+
+newRow <- data.frame(randomnames='james')
+randomnames <- rbind(randomnames, newRow)
 
 dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
                                   tolower(randomnames$randomnames),
