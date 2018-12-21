@@ -3,6 +3,7 @@ library(gdata)
 MDS <-function(Dissimilarity_matrix, dim){
   
   D<-Dissimilarity_matrix
+
   D2 <- D^2
   D2
   
