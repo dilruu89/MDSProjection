@@ -23,8 +23,7 @@ matd <- matrix(c(0,1,2,1,6.2,
 
 mat2<-MDS(mat,2)
 
-dist<-dist(mat2$Points, method = "euclidean")
-
-cmdscale(mat)
+dist<-dist(points, method = "euclidean")
+dist^2
 
 

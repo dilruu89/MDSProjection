@@ -2,7 +2,7 @@ library(stringdist)
 
 Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
 
-distance.method <- "jw"
+distance.method <- "qgram"
 
 randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
 randomnames <- as.data.frame(randomnames)
