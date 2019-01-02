@@ -2,7 +2,7 @@ library(stringdist)
 
 Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
 
-distance.method <- "jw"
+distance.method <- "qgram"
 
 randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
 randomnames <- as.data.frame(randomnames)
@@ -14,7 +14,7 @@ randomnames <- rbind(randomnames, newRow)
 dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
                                   tolower(randomnames$randomnames),
                                   method = distance.method,
-                                  nthread = getOption("sd_num_thread"),q=2)
+                                  nthread = getOption("sd_num_thread"),q=3)
 
 results <- MDS(dist.name.enh,6)
 
@@ -29,3 +29,5 @@ sum(Negev)
 stressV <- calculateStress(2,20,dist.name.enh)
 SummaryStress(stressV)
 
+hist(eigen(results$InnerProduct)$values)
+sort(eigen(results$InnerProduct)$values)
