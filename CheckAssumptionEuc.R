@@ -21,7 +21,3 @@ ggplot(dat, aes(x=ObservedDist, y=PredictedDist)) +
 
 
 
-
-
-
-

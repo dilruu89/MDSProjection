@@ -4,9 +4,9 @@ library(gdata)
 Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
 #Surnamefile1 <- read.csv("~/Documents/MDS/NewAnalysis/Data/US_Surname.csv",header = TRUE)
 
-distance.method <- "jaccard"
+distance.method <- "qgram"
 
-randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 5000),]
+randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
 randomnames <- as.data.frame(randomnames)
 randomnames
 
@@ -16,12 +16,12 @@ randomnames
 dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
                                   tolower(randomnames$randomnames),
                                   method = distance.method,
-                                  nthread = getOption("sd_num_thread"))
+                                  nthread = getOption("sd_num_thread"),q=2)
 
 
-rest<-cmdscale(dist.name.enh,6)
+#rest<-cmdscale(dist.name.enh,6)
 
-results <- MDS(dist.name.enh,6)
+results <- MDS(dist.name.enh,2)
 
 ev<-results$EigenValues$values
 
@@ -36,10 +36,10 @@ sum(Negev)
 
 #hist(ev,col = "grey", xlab = "Eigenvalues-jaccard", main = "Histogram of eigenvalues")
 
-jaccard_dist <- c(upperTriangle(dist.name.enh, diag=FALSE, byrow=TRUE))
-write.csv(c(jaccard_dist),"~/Documents/MDS/NewAnalysis/Distance/jaccrd_distances.csv")
+bigram_dist <- c(upperTriangle(dist.name.enh, diag=FALSE, byrow=TRUE))
+write.csv(c(bigram_dist),"~/Documents/MDS/NewAnalysis/Distance/bigram_dist_distances.csv")
 
-write.csv(rest,"~/Documents/MDS/NewAnalysis/Distance/jaccrd_points.csv")
+write.csv(rest,"~/Documents/MDS/NewAnalysis/Distances/bigram_dist_points.csv")
 
 predictedDist <- c(dist(rest, method = "euclidean"))
-write.csv(predictedDist,"~/Documents/MDS/NewAnalysis/Distance/jaccard_euclidean.csv")
+write.csv(predictedDist,"~/Documents/MDS/NewAnalysis/Distance/bigram_dist_euclidean.csv")

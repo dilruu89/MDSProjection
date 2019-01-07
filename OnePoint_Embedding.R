@@ -1,7 +1,9 @@
 D<-dist.name.enh
 new_point <-"james"
+new_points <-c("james","jimmy")
+new_points <- as.data.frame(new_points)
 
-new_distances <-stringdist(tolower(randomnames$randomnames),new_point, method = distance.method,
+new_distances <-stringdist(tolower(randomnames$randomnames),new_points$new_points, method = distance.method,
                            nthread = getOption("sd_num_thread"),q=2)
 
 D2 <- cbind(D,c(new_distances))
@@ -23,7 +25,7 @@ mds.w.centered <- function(D,w) {
   P <- diag(n) - e %*% t(w)/s
   Q <- diag(n) - w %*% t(e)/s
   X<-0.5 * P %*% D %*% Q
-  return (X)
+  return (X) 
   
 }
 
@@ -44,9 +46,11 @@ minimizing_func <- function(y,B,X) {
 
 stdv<-sd(Euc_distances)
 
-y <- nlm(minimizing_func,p=rnorm(6,sd=stdv),B,X)
+y <- nlm(minimizing_func,p=rnorm(2,sd=stdv),B,X)
 New_points <- rbind(X,y$estimate)
 
 New_Euc_distances<-c(dist(New_points, method = "euclidean"))
 
 hist(New_Euc_distances,col = "grey", xlim = c(0,25), ylim = c(0,15), main = 'Euclidean distances between predicted names')
+
+
