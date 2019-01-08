@@ -10,8 +10,8 @@ randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
 randomnames <- as.data.frame(randomnames)
 randomnames
 
-#newRow <- data.frame(randomnames='james')
-#randomnames <- rbind(randomnames, newRow)
+#newnames <- data.frame(randomnames=c("james","jane"))
+#randomnames <- rbind(randomnames, newnames)
 
 dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
                                   tolower(randomnames$randomnames),

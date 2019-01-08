@@ -1,9 +1,8 @@
 D<-dist.name.enh
+D
 new_point <-"james"
-new_points <-c("james","jimmy")
-new_points <- as.data.frame(new_points)
 
-new_distances <-stringdist(tolower(randomnames$randomnames),new_points$new_points, method = distance.method,
+new_distances <-stringdist(tolower(randomnames$randomnames),new_point, method = distance.method,
                            nthread = getOption("sd_num_thread"),q=2)
 
 D2 <- cbind(D,c(new_distances))
@@ -24,7 +23,7 @@ mds.w.centered <- function(D,w) {
   s <- sum(w)
   P <- diag(n) - e %*% t(w)/s
   Q <- diag(n) - w %*% t(e)/s
-  X<-0.5 * P %*% D %*% Q
+  X <- 0.5 * P %*% D2^2 %*% Q
   return (X) 
   
 }

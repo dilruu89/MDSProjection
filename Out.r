@@ -9,18 +9,6 @@ mds.tau <- function(H)
   return(-0.5 * P %*% H %*% P)
 }
 
-mds.tau.w <- function(H,w) {
-  #
-  #  This function computes tau_w for specified w.
-  #
-  n <- length(w)
-  w <- matrix(w,ncol=1)
-  e <- matrix(1,nrow=n,ncol=1)
-  s <- sum(w)
-  P <- diag(n) - e %*% t(w)/s
-  Q <- diag(n) - w %*% t(e)/s
-  return(-0.5 * P %*% H %*% Q)
-}
 
 mds.kappa <- function(C) {
   #
