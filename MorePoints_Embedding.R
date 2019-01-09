@@ -16,6 +16,7 @@ n2<- nrow(D2)
 ones <- rep(1, n1)
 zeros <-rep(0,n2- n1)
 w <-c(ones,zeros)
+lower<-n1+1
 
 mds.w.centered2<- function(D,w) {
   #
@@ -30,11 +31,31 @@ mds.w.centered2<- function(D,w) {
   return(-0.5 * P %*% D %*% Q)
 }
 
-mds.w.centered2(D2^2,w)
+minimizing_func <- function(y,B,X) {
+  n <- nrow(X)+(n2-n1)
+  B_xy <- t(B[lower:n,1:n1])
+  B_yy <- B[lower:n,lower:n]
+  
+  y <- matrix(y,ncol=2)
+  
+  res <- 2*sum((B_xy - X %*% y)^2) + (B_yy-sum(y^2))^2
+  
+  attr(res,"gradient") <- -4 * t(X) %*% (B_xy - X %*% y) - 4 * (B_yy - sum(y^2)) * y
+  
+  return(res)
+} 
 
+B <- mds.w.centered2(D2^2,w)
 
 X<-results$Points
 Euc_distances<-c(dist(X, method = "euclidean"))
+
+stdv<-sd(Euc_distances)
+
+
+y <- nlm(minimizing_func,p=rnorm(4,sd=stdv),B,X)
+
+#New_points <- rbind(X,y$estimate)
 
 
 

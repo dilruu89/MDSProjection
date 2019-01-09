@@ -37,7 +37,9 @@ minimizing_func <- function(y,B,X) {
   b <- matrix(B[-n,n],ncol=1)
   beta <- B[n,n]
   y <- matrix(y,ncol=1)
+  
   res <- 2*sum((b - X %*% y)^2) + (beta-sum(y^2))^2
+  
   attr(res,"gradient") <- -4 * t(X) %*% (b - X %*% y) -
     4 * (beta - sum(y^2)) * y
   return(res)

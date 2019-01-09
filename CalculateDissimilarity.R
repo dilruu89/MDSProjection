@@ -21,7 +21,7 @@ dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
 
 #rest<-cmdscale(dist.name.enh,6)
 
-results <- MDS(dist.name.enh,2)
+results <- MDS(D,2)
 
 ev<-results$EigenValues$values
 
