@@ -1,16 +1,35 @@
+library(stringdist)
+library(gdata)
 
-D<-dist.name.enh
+Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
 
-newnames <- data.frame(randomnames=c("james","jane"))
-randomnames <- rbind(randomnames, newnames)
+distance.method <- "qgram"
+
+randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
+randomnames <- as.data.frame(randomnames)
+randomnames
+
 
 dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
                                   tolower(randomnames$randomnames),
                                   method = distance.method,
                                   nthread = getOption("sd_num_thread"),q=2)
 
+D<-dist.name.enh
+results <- MDS(D,2)
 
-D2<-dist.name.enh
+
+newnames <- data.frame(randomnames=c("james","jane"))
+randomnames <- rbind(randomnames, newnames)
+
+dist.name.enh_2 <- stringdistmatrix(tolower(randomnames$randomnames),
+                                  tolower(randomnames$randomnames),
+                                  method = distance.method,
+                                  nthread = getOption("sd_num_thread"),q=2)
+
+
+
+D2<-dist.name.enh_2
 n1<-nrow(D)
 n2<- nrow(D2)
 ones <- rep(1, n1)

@@ -1,5 +1,22 @@
+library(stringdist)
+library(gdata)
+
+Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
+
+distance.method <- "qgram"
+
+randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
+randomnames <- as.data.frame(randomnames)
+randomnames
+
+
+dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
+                                  tolower(randomnames$randomnames),
+                                  method = distance.method,
+                                  nthread = getOption("sd_num_thread"),q=2)
+
 D<-dist.name.enh
-D
+
 new_point <-"james"
 
 new_distances <-stringdist(tolower(randomnames$randomnames),new_point, method = distance.method,
