@@ -17,7 +17,9 @@ dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
 
 D<-dist.name.enh
 
-new_point <-"james"
+results<-MDS(D,2)
+
+new_point <-"rise"
 
 new_distances <-stringdist(tolower(randomnames$randomnames),new_point, method = distance.method,
                            nthread = getOption("sd_num_thread"),q=2)
@@ -65,6 +67,9 @@ minimizing_func <- function(y,B,X) {
 stdv<-sd(Euc_distances)
 
 y <- nlm(minimizing_func,p=rnorm(2,sd=stdv),B,X)
+
+#y <- nlm(minimizing_func,p=c(0.76030400,1.20691993),B,X)
+
 New_points <- rbind(X,y$estimate)
 
 New_Euc_distances<-c(dist(New_points, method = "euclidean"))

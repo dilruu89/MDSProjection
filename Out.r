@@ -73,7 +73,10 @@ f <- function(y,B,X) {
   return(res)
 } 
 
-y <- nlm(f,p=rnorm(2,sd=5),B=B.x,X=X.4)
-Y <- rbind(X.4,y$estimate)
+#y <- nlm(f,p=rnorm(2,sd=5),B=B.x,X=X.4)
+#Y <- rbind(X.4,y$estimate)
 D2.y <- mds.edm2(Y)
+
+y<-nlm(f,p=rnorm(2,sd=5),B=B.x,X=res$Points)
+Y <- rbind(res$Points,y$estimate)
 
