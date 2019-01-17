@@ -3,8 +3,12 @@ Delta2 <- matrix(c(0,100,45,45,100,0,45,45,45,45,0,64,45,45,64,0),byrow=T,ncol=4
 res<-MDS(Delta2,2)
 
 a2 <- c(386,386,457,457)
+#a2<-c(0,100,45,45)
 A2 <- cbind(Delta2,a2)
 A2 <- rbind(A2,c(a2,0))
+
+embed<-Outofsample_method(A2,res$Points)
+plot(embed)
 
 #example 22222
 

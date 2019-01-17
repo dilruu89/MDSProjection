@@ -4,26 +4,15 @@ mat <- matrix(c(0,1,2,1,1,0,1,2,2,1,0,1,1,2,1,0),
               nrow = 4)
 
 a2<-c(6.2,4.5,6.3,4.5)
+#a2<-c(0,1,2,1)
 
-#newmat <- matrix(c(mat,t(t(a2)),t(a2),0), nrow =5)
-
-
-matd <- matrix(c(0,1,2,1,6.2,
-                
-                1,0,1,2,4.5,
-                
-                2,1,0,1,6.3,
-                
-                1,2,1,0,4.5,
-                
-                6.2,4.5,6.3,4.5,0
-                
-                ),
-              nrow = 5)
+A2<- cbind(mat,a2)
+A2 <- rbind(A2,c(a2,0))
 
 mat2<-MDS(mat,2)
+plot(mat2$Points)
 
-dist<-dist(points, method = "euclidean")
-dist^2
+embed_point<-Outofsample_method(A2,mat2$Points)
+plot(embed_point)
 
 

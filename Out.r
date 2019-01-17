@@ -40,6 +40,19 @@ mds.edm2 <- function(X) {
 }
 
 
+mds.tau.w <- function(H,w) {
+  #
+  #  This function computes tau_w for specified w.
+  #
+  n <- length(w)
+  w <- matrix(w,ncol=1)
+  e <- matrix(1,nrow=n,ncol=1)
+  s <- sum(w)
+  P <- diag(n) - e %*% t(w)/s
+  Q <- diag(n) - w %*% t(e)/s
+  return(-0.5 * P %*% H %*% Q)
+}
+
 Delta2 <- matrix(c(0,1,2,1,1,0,1,2,2,1,0,1,1,2,1,0),byrow=T,ncol=4)
 B.4 <- mds.tau(Delta2)  #B
 eig <- eigen(B.4, symmetric = TRUE)
@@ -67,9 +80,9 @@ f <- function(y,B,X) {
   b <- matrix(B[-n,n],ncol=1)
   beta <- B[n,n]
   y <- matrix(y,ncol=1)
-  res <- 2*sum((b - X %*% y)^2) + (beta-sum(y^2))^2
-  attr(res,"gradient") <- -4 * t(X) %*% (b - X %*% y) -
-    4 * (beta - sum(y^2)) * y
+  res <- 2*sum((b - X %*% y)^2)  + (beta-sum(y^2))^2
+  #print(y)
+  attr(res,"gradient") <- -4 * t(X) %*% (b - X %*% y) -4 * (beta - sum(y^2)) * y
   return(res)
 } 
 
@@ -77,6 +90,6 @@ f <- function(y,B,X) {
 #Y <- rbind(X.4,y$estimate)
 D2.y <- mds.edm2(Y)
 
-y<-nlm(f,p=rnorm(2,sd=5),B=B.x,X=res$Points)
-Y <- rbind(res$Points,y$estimate)
+y<-nlm(f,p=rnorm(2,sd=5),B=B.x,X=mat2$Points)
+Y <- rbind(mat2$Points,y$estimate)
 

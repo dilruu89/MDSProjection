@@ -1,10 +1,23 @@
 library(gdata)
 
+calculatestress_point<-function(dissimilaritymatrix,points){
+  
+  vec2 <- c(upperTriangle(dissimilaritymatrix, diag=FALSE, byrow=TRUE))
+  vec1 <- c(dist(points, method = "euclidean"))
+  residualfac = sum((vec1-vec2)^2)
+  normalizefac = sum(vec1^2)
+  stressCMD=sqrt(residualfac/normalizefac)
+  
+  return(list("stress"=stressCMD,"residualfac"=residualfac,"normalizefac"=normalizefac))
+  
+}
+
 calculateStress<-function(lowerbound, upperbound, dissimilaritymatrix ){
 
   vec2 <- c(upperTriangle(dissimilaritymatrix, diag=FALSE, byrow=TRUE))
   
   stressvec<-c()
+  #results<-c()
   
   for (dim in lowerbound:upperbound){
     
@@ -14,9 +27,19 @@ calculateStress<-function(lowerbound, upperbound, dissimilaritymatrix ){
     residualfac = sum((vec1-vec2)^2)
     normalizefac = sum(vec1^2)
     
+    print("residualfac..")
+    print(residualfac)
+    print("normalizefac..")
+    print(normalizefac)
+    
     stressCMD=sqrt(residualfac/normalizefac)
+    print("Stress..")
+    print(stressCMD)
     stressvec[dim]<-stressCMD
+    #results<-rbind(results,dist.surname.enh.MDS)
   }
+  
+  #res_list <- list("stressvec" = stressvec, "res" = results)
   
   return(stressvec)
 }
