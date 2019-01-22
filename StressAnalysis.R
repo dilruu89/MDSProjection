@@ -8,9 +8,10 @@ calculatestress_point<-function(dissimilaritymatrix,points){
   normalizefac = sum(vec1^2)
   stressCMD=sqrt(residualfac/normalizefac)
   
-  return(list("stress"=stressCMD,"residualfac"=residualfac,"normalizefac"=normalizefac))
+  return(list("stress"=stressCMD,"residualfac"=residualfac,"normalizefac"=normalizefac, "Eucdist"=vec1))
   
 }
+
 
 calculateStress<-function(lowerbound, upperbound, dissimilaritymatrix ){
 
@@ -56,4 +57,4 @@ SummaryStress<-function(stressvec){
 
 }
 
-write.csv(stressvec,"~/Documents/MDS/NewAnalysis/Distributions/Stress_VS_Dim_AU_lv.csv")
+#write.csv(stressvec,"~/Documents/MDS/NewAnalysis/Distributions/Stress_VS_Dim_AU_lv.csv")

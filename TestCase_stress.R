@@ -15,17 +15,37 @@ dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
                                   method = distance.method,
                                   nthread = getOption("sd_num_thread"),q=2)
 
-D<-dist.name.enh
+stress_analysis(dist.name.enh)
 
+#D<-dist.name.enh
 
-s<-calculateStress(0,5,D^2)
-SummaryStress(s)
-
-results_<-MDS(D^2,5)
+dissimilaritymatrix<-dist.name.enh
+results_<-MDS(dissimilaritymatrix^2,2)
 
 points<-results_$Points
 
-calculatestress_point(D,points)
 
-stress<-c(0.7967197,0.5675386,0.489663,0.4414494)
-plot(stress)
+#s<-calculateStress(0,5,D^2)
+#SummaryStress(s)
+
+
+#results_<-MDS(D^2,2)
+#points<-results_$Points
+#calculatestress_point(D,points)
+
+#iterative calculate stress
+stress_analysis<-function(D){
+stressv<-c()
+for (dim in 2:8){
+  results_<-MDS(D^2,dim)
+  t<-calculatestress_point(D,results_$Points)
+  print(t$stress)
+  stressv[dim]<-t$stress
+}
+
+print(results_$EigenValues$values)
+plot(stressv)
+}
+
+#write.csv(stressv,"~/Documents/MDS/NewAnalysis/Stress/stress_jw.csv")
+
