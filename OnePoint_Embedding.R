@@ -6,7 +6,7 @@ Outofsample_method<-function(squared_matrix, points){
   n <- nrow(D2)
   ones <- rep(1, n-1)
   w <-c(ones,0)
-  print(w)
+  #print(w)
   B <- mds.w.centered(D2,w)
   X<-points
   
@@ -14,7 +14,7 @@ Outofsample_method<-function(squared_matrix, points){
   #stdv<-sd(Euc_distances)
   #y <- nlm(minimizing_func,p=rnorm(2,sd=stdv),B,X)
   
-  y <- nlm(minimizing_func,p=c(1,1),B,X)
+  y <- nlm(minimizing_func,p=c(-0.009640601,-0.11018199),B,X)
   
   New_points <- rbind(X,y$estimate)
   #New_Euc_distances<-c(dist(New_points, method = "euclidean"))

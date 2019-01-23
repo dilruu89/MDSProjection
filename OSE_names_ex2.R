@@ -5,27 +5,30 @@ Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
 
 distance.method <- "qgram"
 
-randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 5000),]
-randomnames <- as.data.frame(randomnames)
-randomnames
+randomnames_it <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
+randomnames_it <- as.data.frame(randomnames_it)
+randomnames_it
 
 
-dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
-                                  tolower(randomnames$randomnames),
+dist.name.enh <- stringdistmatrix(tolower(randomnames_it$randomnames_it),
+                                  tolower(randomnames_it$randomnames_it),
                                   method = distance.method,
                                   nthread = getOption("sd_num_thread"),q=2)
 
 
 D<-dist.name.enh
 
-results<-MDS(D^2,10)
+results<-MDS(D^2,2)
 
-new_point <-" liteplo"
+new_point <-"tara"
 
-new_distances <-stringdist(tolower(randomnames$randomnames),new_point, method = distance.method,
+newname <- data.frame(randomnames_it=c(new_point))
+randomnames_it <- rbind(randomnames_it, newname)
+
+new_distances <-stringdist(tolower(randomnames_it$randomnames_it),new_point, method = distance.method,
                            nthread = getOption("sd_num_thread"),q=2)
 
-D2 <- cbind(D,c(new_distances))
+D2 <- cbind(D2,c(new_distances))
 D2 <- rbind(D2,c(new_distances,0))
 
 embed<-Outofsample_method(D2,results$Points)

@@ -36,14 +36,14 @@ points<-results_$Points
 #iterative calculate stress
 stress_analysis<-function(D){
 stressv<-c()
-for (dim in 2:8){
+for (dim in 2:20){
   results_<-MDS(D^2,dim)
   t<-calculatestress_point(D,results_$Points)
   print(t$stress)
   stressv[dim]<-t$stress
 }
 
-print(results_$EigenValues$values)
+#print(results_$EigenValues$values)
 plot(stressv)
 }
 
