@@ -2,10 +2,11 @@ library(stringdist)
 library(gdata)
 
 Surnamefile1 <- read.csv("~/Documents/RScripts/surname.csv",header = TRUE)
+#urnamefile1 <- read.csv("~/Documents/MDS/NewAnalysis/data/US_Surname.csv",sep = ";",stringsAsFactors = FALSE)
 
-distance.method <- "jw"
+distance.method <- "qgram"
 
-randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 10),]
+randomnames <- Surnamefile1[sample(nrow(Surnamefile1), 5000),]
 randomnames <- as.data.frame(randomnames)
 randomnames
 
@@ -15,37 +16,30 @@ dist.name.enh <- stringdistmatrix(tolower(randomnames$randomnames),
                                   method = distance.method,
                                   nthread = getOption("sd_num_thread"),q=2)
 
-stress_analysis(dist.name.enh)
+stress_vec<-stress_analysis(dist.name.enh)
 
-#D<-dist.name.enh
+results_<-MDS(dist.name.enh^2,12)
+predictedDist <- c(dist(results_$Points, method = "euclidean"))
 
-dissimilaritymatrix<-dist.name.enh
-results_<-MDS(dissimilaritymatrix^2,2)
+results_$EigenValues$values
+
+-diff(results_$EigenValues$values)
 
 points<-results_$Points
 
 
-#s<-calculateStress(0,5,D^2)
-#SummaryStress(s)
-
-
-#results_<-MDS(D^2,2)
-#points<-results_$Points
-#calculatestress_point(D,points)
-
 #iterative calculate stress
 stress_analysis<-function(D){
 stressv<-c()
-for (dim in 2:20){
+for (dim in 2:25){
   results_<-MDS(D^2,dim)
   t<-calculatestress_point(D,results_$Points)
   print(t$stress)
   stressv[dim]<-t$stress
 }
-
-#print(results_$EigenValues$values)
 plot(stressv)
+return(stressv)
 }
 
-#write.csv(stressv,"~/Documents/MDS/NewAnalysis/Stress/stress_jw.csv")
+write.csv(stress_vec,"~/Documents/MDS/NewAnalysis/Stress/Stress_vs_Dim_jaccard_2.csv")
 

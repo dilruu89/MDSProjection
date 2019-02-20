@@ -6,21 +6,23 @@ predictedDist <- read.csv("~/Documents/MDS/NewAnalysis/Distributions/trigrams.cs
 
 simulatedDist <- read.csv("~/Documents/MDS/NewAnalysis/Distributions/simulatednamedist_trigram.csv",header = FALSE)
 
+simulatedDist<-veceu
+
 #plot for the observed distances
 qplot(bigram_dist,
       geom="histogram", 
       main = "Histogram for bigram distances between real names",
       binwidth = 0.5, xlim=c(0,2))
 
-qplot(predictedDist,
+qplot(simulatedDist,
       geom="histogram",
       binwidth = 0.5,  
-      main = "Histogram for Euclidean distances in predicted names", 
-      xlab = "Euclidean distances between predicted names",  
+      main = "Histogram for Euclidean distances in simulated names", 
+      xlab = "Euclidean distances between simulated data points",
       fill=I("blue"), 
       col=I("red"), 
       alpha=I(.2),
-      xlim=c(-5,35))
+      xlim=c(-5,30))
 
 
 library("ggpubr")

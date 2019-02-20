@@ -20,7 +20,7 @@ D<-dist.name.enh
 
 results<-MDS(D^2,2)
 
-new_point <-"tara"
+new_point <-"kontopoulos"
 
 newname <- data.frame(randomnames_it=c(new_point))
 randomnames_it <- rbind(randomnames_it, newname)
@@ -28,7 +28,7 @@ randomnames_it <- rbind(randomnames_it, newname)
 new_distances <-stringdist(tolower(randomnames_it$randomnames_it),new_point, method = distance.method,
                            nthread = getOption("sd_num_thread"),q=2)
 
-D2 <- cbind(D2,c(new_distances))
+D2 <- cbind(D,c(new_distances))
 D2 <- rbind(D2,c(new_distances,0))
 
 embed<-Outofsample_method(D2,results$Points)

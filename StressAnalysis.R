@@ -7,9 +7,9 @@ calculatestress_point<-function(dissimilaritymatrix,points){
   residualfac = sum((vec1-vec2)^2)
   normalizefac = sum(vec1^2)
   stressCMD=sqrt(residualfac/normalizefac)
-  
+
   return(list("stress"=stressCMD,"residualfac"=residualfac,"normalizefac"=normalizefac, "Eucdist"=vec1))
-  
+
 }
 
 
